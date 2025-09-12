@@ -3,8 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>待辦首頁</title>
+    <meta name="viewport" content="width={device-width}, initial-scale=1.0">
+    <title>單一事項</title>
     <style>
         .todo {
             background-color: aqua;
@@ -17,20 +17,19 @@
 </head>
 
 <body>
-    <h1>TodoList</h1>
-    <!-- 9/10 1:30:00 -->
-    {% for todo in todos %}
+    <h1>Todo</h1>
 
     <div class="todo">
+        {% if todo %}
         <h4>{{todo.created}}</h4>
-        <a href="{% url 'view_todo' todo.id %}">
-            <h3>{{todo.title}}</h3>
-        </a>
+        <h3>{{todo.title}}</h3>
         <p>{{todo.text}}</p>
         <u>{{todo.important}}</u>
+        {% else %}
+        <h3>無此編號,請重新輸入</h3>
+        {% endif %}
     </div>
 
-    {% endfor %}
 </body>
 
 </html>
