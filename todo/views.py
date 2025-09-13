@@ -6,6 +6,27 @@ from .models import Todo
 # Create your views here.
 
 
+def create_todo(request):
+    message = ""
+    # POST 按button後submit
+    if request.method == "POST":
+        print(request.POST)
+        title = request.POST.get("title")
+        if title == "":
+            print("標題欄位不能為空!")
+            message = "標題欄位不能為空!"
+        else:
+            text = request.POST.get("text")
+            important = request.POST.get("important")
+
+            important = True if important == "on" else False
+            todo = Todo.objects.create(title=title, text=text, important=important)
+            todo.save()
+            message = "寫入資料庫成功"
+
+    return render(request, "todo/create-todo.html", {"message": message})
+
+
 # 1.新增todo.html
 # 2.將todo 傳輸到{{todo}}
 def view_todo(request, id):
