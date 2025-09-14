@@ -17,14 +17,19 @@
 </head>
 
 <body>
-    <h1>View Todo Update by ModelForm</h1>
-    <!-- 9/12 2:30:00 -->
-    <form action="" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">更新</button>
-    </form>
-    {{message}}
+    <h1>Todo</h1>
+
+    <div class="todo">
+        {% if todo %}
+        <h4>{{todo.created}}</h4>
+        <h3>{{todo.title}}</h3>
+        <p>{{todo.text}}</p>
+        <u>{{todo.important}}</u>
+        {% else %}
+        <h3>無此編號,請重新輸入</h3>
+        {% endif %}
+    </div>
+
 </body>
 
 </html>

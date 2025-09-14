@@ -3,6 +3,7 @@ from django.http import HttpResponse
 import json
 from .models import Todo
 from .forms import TodoForm
+from datetime import datetime
 
 # Create your views here.
 
@@ -40,9 +41,32 @@ def create_todo1(request):
     return render(request, "todo/create-todo1.html", {"message": message})
 
 
+def view_todo(request, id):
+    message = ""
+    # 檢視目前
+    try:
+        todo = Todo.objects.get(id=id)
+        form = TodoForm(instance=todo)
+    except Exception as e:
+        print(e)
+    # 更新資料
+    if request.method == "POST":
+        form = TodoForm(request.POST, instance=todo)
+        todo = form.save(commit=False)
+        if todo.completed:
+            todo.date_completed = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        else:
+            todo.date_completed = None
+
+        todo.save()
+        message = "更新成功!!!"
+
+    return render(request, "todo/view-todo.html", {"form": form, "message": message})
+
+
 # 1.新增todo.html
 # 2.將todo 傳輸到{{todo}}
-def view_todo(request, id):
+def view_todo1(request, id):
     todo = None
     try:
         todo = Todo.objects.get(id=id)
