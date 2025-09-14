@@ -1,14 +1,27 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 import json
 from .models import Todo
+from .forms import TodoForm
 
 # Create your views here.
 
 
 def create_todo(request):
     message = ""
-    # POST 按button後submit
+    form = TodoForm()
+    # POST 網頁按button後submit
+    if request.method == "POST":
+        form = TodoForm(request.POST)
+        form.save()
+        message = "寫入資料庫成功"
+        return redirect("todolist")
+    return render(request, "todo/create-todo.html", {"message": message, "form": form})
+
+
+def create_todo1(request):
+    message = ""
+    # POST 網頁按button後submit
     if request.method == "POST":
         print(request.POST)
         title = request.POST.get("title")
@@ -24,7 +37,7 @@ def create_todo(request):
             todo.save()
             message = "寫入資料庫成功"
 
-    return render(request, "todo/create-todo.html", {"message": message})
+    return render(request, "todo/create-todo1.html", {"message": message})
 
 
 # 1.新增todo.html
@@ -44,7 +57,8 @@ def view_todo(request, id):
 
 # 9/10 1:30:00
 def todolist(request):
-    todos = Todo.objects.all()
+    # order_by 使用 - 號降序
+    todos = Todo.objects.all().order_by("-created")
     return render(request, "todo/todolist.html", {"todos": todos})
 
 

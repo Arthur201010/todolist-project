@@ -18,7 +18,8 @@
 
 <body>
     <h1>TodoList</h1>
-    <a href="{% url 'create_todo' %}">新增待辦事項</a>
+    <a href="{% url 'create_todo' %}">新增待辦事項by name</a>
+    <!-- <a href="create/">建立待辦事項by 網址</a> -->
     <!-- 9/10 1:30:00 -->
     {% for todo in todos %}
 
