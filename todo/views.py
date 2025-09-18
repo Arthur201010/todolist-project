@@ -2,18 +2,19 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 import json
 from .models import Todo
-from .forms import TodoForm
+from .forms import TodoForm, CreateTodoForm
 from datetime import datetime
 
 # Create your views here.
 
 
+# CCreateTodoForm 9/17 1:00:00
 def create_todo(request):
     message = ""
-    form = TodoForm()
+    form = CreateTodoForm()
     # POST 網頁按button後submit
     if request.method == "POST":
-        form = TodoForm(request.POST)
+        form = CreateTodoForm(request.POST)
         form.save()
         message = "寫入資料庫成功"
         return redirect("todolist")
