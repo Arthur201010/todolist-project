@@ -24,6 +24,7 @@
     {% for todo in todos %}
 
     <div class="todo">
+        <a href="{% url 'delete_todo' todo.id %}" onclick="return confirm('是否刪除?')">刪除</a>
         <h4>{{todo.created}}</h4>
         <a href="{% url 'view_todo' todo.id %}">
             <h3>{{todo.title}}</h3>
