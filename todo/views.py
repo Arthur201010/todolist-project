@@ -15,9 +15,14 @@ def create_todo(request):
     # POST 網頁按button後submit
     if request.method == "POST":
         form = CreateTodoForm(request.POST)
-        form.save()
-        message = "寫入資料庫成功"
+        # 缺少綁定user
+        todo = form.save(commit=False)
+        todo.user = request.user
+        todo.save()
+        # form.save()
+        message = "建立成功!"
         return redirect("todolist")
+
     return render(request, "todo/create-todo.html", {"message": message, "form": form})
 
 
@@ -92,7 +97,11 @@ def view_todo1(request, id):
 # 9/10 1:30:00
 def todolist(request):
     # order_by 使用 - 號降序
-    todos = Todo.objects.all().order_by("-created")
+    # todos = Todo.objects.all().order_by("-created")
+    todos = None
+    if request.user.is_authenticated:
+        todos = Todo.objects.filter(user=request.user).order_by("-created")
+
     return render(request, "todo/todolist.html", {"todos": todos})
 
 

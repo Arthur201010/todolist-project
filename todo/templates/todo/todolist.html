@@ -27,7 +27,9 @@
     <a href="{% url 'user_register' %}">註冊</a>
     {% endif %}
     <h1>TodoList</h1>
-
+    {% if not todos %}
+    無待辦事項, 請新增或登入
+    {% endif %}
     <!-- <a href="create/">建立待辦事項by 網址</a> -->
     <!-- 9/10 1:30:00 -->
     {% for todo in todos %}
