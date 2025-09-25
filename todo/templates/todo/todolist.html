@@ -1,55 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>待辦首頁</title>
-    <style>
-        .todo {
-            background-color: aqua;
-            border-radius: 12px;
-            padding: 12px;
-            margin: 6px;
-            width: 600px;
-        }
-    </style>
-</head>
+{% block title %}
+<title>待辦事項</title>
+{% endblock %}
+{% block css %}
+<style>
+    .todo {
+        background-color: aqua;
+        border-radius: 12px;
+        padding: 12px;
+        margin: 6px;
+        width: 600px;
+    }
+</style>
+{% endblock %}
 
-<body>
+{% block content %}
 
-    {% if user.is_authenticated %}
-    使用者:{{user.username}}
-    <a href="{% url 'user_logout' %}">登出</a>
-    <a href="{% url 'create_todo' %}">建立待辦事項by name</a>
-    {% else %}
-    <a href="{% url 'user_login' %}">登入</a>
-    <a href="{% url 'user_register' %}">註冊</a>
+<h1>TodoList</h1>
+{% if not todos %}
+<h3>無待辦事項, 請新增或登入</h3>
+{% endif %}
+<!-- <a href="create/">建立待辦事項by 網址</a> -->
+<!-- 9/10 1:30:00 -->
+{% for todo in todos %}
+<div class="todo">
+    <a href="{% url 'delete_todo' todo.id %}" onclick="return confirm('是否刪除?')">刪除</a>
+    <h4>{{todo.created}}</h4>
+    <a href="{% url 'view_todo' todo.id %}">
+        <h3>{{todo.title}}</h3>
+    </a>
+    <p>{{todo.text}}</p>
+    <u>{{todo.important}}</u>
+    {% if todo.date_completed %}
+    <p>
+        完成時間:<u>{{todo.date_completed}}</u>
+    </p>
     {% endif %}
-    <h1>TodoList</h1>
-    {% if not todos %}
-    無待辦事項, 請新增或登入
-    {% endif %}
-    <!-- <a href="create/">建立待辦事項by 網址</a> -->
-    <!-- 9/10 1:30:00 -->
-    {% for todo in todos %}
+</div>
 
-    <div class="todo">
-        <a href="{% url 'delete_todo' todo.id %}" onclick="return confirm('是否刪除?')">刪除</a>
-        <h4>{{todo.created}}</h4>
-        <a href="{% url 'view_todo' todo.id %}">
-            <h3>{{todo.title}}</h3>
-        </a>
-        <p>{{todo.text}}</p>
-        <u>{{todo.important}}</u>
-        {% if todo.date_completed %}
-        <p>
-            完成時間:<u>{{todo.date_completed}}</u>
-        </p>
-        {% endif %}
-    </div>
-
-    {% endfor %}
-</body>
-
-</html>
+{% endfor %}
+{% endblock %}
