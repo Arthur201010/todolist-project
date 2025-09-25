@@ -17,9 +17,17 @@
 </head>
 
 <body>
+
+    {% if user.is_authenticated %}
+    使用者:{{user.username}}
+    <a href="{% url 'user_logout' %}">登出</a>
+    <a href="{% url 'create_todo' %}">建立待辦事項by name</a>
+    {% else %}
+    <a href="{% url 'user_login' %}">登入</a>
     <a href="{% url 'user_register' %}">註冊</a>
+    {% endif %}
     <h1>TodoList</h1>
-    <a href="{% url 'create_todo' %}">新增待辦事項by name</a>
+
     <!-- <a href="create/">建立待辦事項by 網址</a> -->
     <!-- 9/10 1:30:00 -->
     {% for todo in todos %}
