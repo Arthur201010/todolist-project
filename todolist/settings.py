@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-flea2pk#2hk$26log(gk$e9q4x*j@lhl8l8ksaw1e%*ac)j28="
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["todolist-project-mi0z.onrender.com"]
 
 
 # Application definition
