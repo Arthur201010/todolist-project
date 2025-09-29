@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
+from django.forms.models import model_to_dict
 import json
 from .models import Todo
 from .forms import TodoForm, CreateTodoForm
@@ -92,6 +93,14 @@ def view_todo1(request, id):
     #     json.dumps(context, ensure_ascii=False), content_type="application/json"
     # )   9/10 2:10:00
     return render(request, "todo/view-todo.html", {"todo": todo})
+
+
+# json
+def api_todolist(request):
+    todos = Todo.objects.all().order_by("-created")
+    print(todos)  # 10/1 0:30:0
+
+    return JsonResponse({"todos": todos})
 
 
 # 9/10 1:30:00
