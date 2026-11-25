@@ -97,10 +97,12 @@ def view_todo1(request, id):
 
 # json
 def api_todolist(request):
-    todos = Todo.objects.all().order_by("-created")
-    print(todos)  # 10/1 0:30:0
+    pass
+    # todos = Todo.objects.all().order_by("-created")
+    # print(todos)  # 10/1 0:30:0
+    # todos = [model_to_dict(todo) for todo in todos]
 
-    return JsonResponse({"todos": todos})
+    # return JsonResponse({"todos": todos})
 
 
 # 9/10 1:30:00
